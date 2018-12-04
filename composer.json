@@ -1,0 +1,23 @@
+{
+    "name": "oliver-hader/session-service",
+    "type": "typo3-cms-extension",
+    "version": "1.0.0",
+    "description": "",
+    "authors": [],
+    "require": {
+        "typo3/cms-core": "^9.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "OliverHader\\SessionService\\": "Classes"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OliverHader\\SessionService\\Tests\\": "Tests"
+        }
+    },
+    "replace": {
+        "session_service": "self.version"
+    }
+}
