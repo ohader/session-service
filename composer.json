@@ -1,8 +1,8 @@
 {
     "name": "oliver-hader/session-service",
     "type": "typo3-cms-extension",
-    "version": "1.0.0",
-    "description": "",
+    "license": ["GPL-2.0-or-later"],
+    "description": "TYPO3 Extbase session & frontend user service",
     "authors": [],
     "require": {
         "typo3/cms-core": "^9.5"
