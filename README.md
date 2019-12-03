@@ -35,7 +35,8 @@ $this->currentVolunteer = SubjectResolver::get()
 ```
 
 In case no frontend user is logged in or could not be mapped to a subject an
-exception of type `InvalidSessionException` is thrown.
+exception of type `InvalidSessionException` is thrown. In case more than one
+subjects would be resolved, a `SubjectException` is thrown.
 
 ## Resolving frontend user entity
 

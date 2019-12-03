@@ -14,7 +14,7 @@ use TYPO3\CMS\Frontend\Controller\TypoScriptFrontendController;
 /**
  * Usage in order to resolve subject based on current frontend user:
  *
- *   $customer = SessionBuilder::get()
+ *   $customer = SubjectResolver::get()
  *     ->forClassName(Domain\Model\Customer::class)
  *     ->forPropertyName('frontendUser')
  *     ->resolve();
@@ -128,13 +128,22 @@ class SubjectResolver
     private function resolveSubject(int $frontendUserId): ?AbstractEntity
     {
         $query = $this->getPersistenceManager()
-            ->createQueryForType($this->className)
-            ->setLimit(1);
+            ->createQueryForType($this->className);
         $query->matching(
             $query->equals($this->propertyName, $frontendUserId)
         );
         $result = $query->execute();
-        if ($result->count() === 1) {
+        $amount = $result->count();
+        if ($amount > 1) {
+            throw new SubjectException(
+                sprintf(
+                    'FrontendUser assignment to Subject is ambiguous, having %d candidates, expected just one.',
+                    $amount
+                ),
+                1575391208
+            );
+        }
+        if ($amount === 1) {
             return $result->getFirst();
         }
         return null;
