@@ -49,5 +49,20 @@ $frontendUser = FrontendUserResolver::get()
     ->resolve();
 ```
 
+## Using session subject collection
+
+`SubjectCollection` inherits from `\ArrayObject` and thus can be used like
+an array in PHP. In case there are items in the session for the mandatory
+`scope` (`project/shopping-cart` in the example below), those items are
+resolved from session storage automatically.
+
+```php
+/** @var $entity \TYPO3\CMS\Extbase\DomainObject\AbstractEntity */
+$entity = $this->entityRepository->findByIdentifier(123);
+$collection = SubjectCollection::get('project/shopping-cart');
+$collection[] = $entity;
+$collection->persist();
+```
+
 In case no frontend user is logged in or could not be mapped to a subject an
 exception of type `InvalidSessionException` is thrown.
