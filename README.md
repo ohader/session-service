@@ -8,11 +8,11 @@ Extbase domain entities that shall be related to an existing `FrontendUser` enti
 require a dedicates property of type `\TYPO3\CMS\Extbase\Domain\Model\FrontendUser`
 (or any sub-class of this model).
 
-In the following example `Volunteer` is the entity to be resolved base on a website
+In the following example `Customer` is the entity to be resolved base on a website
 frontend user.
 
 ```php
-class Volunteer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
+class Customer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 {
     /**
      * Frontend User
@@ -24,12 +24,12 @@ class Volunteer extends \TYPO3\CMS\Extbase\DomainObject\AbstractEntity
 
 ## Resolving entity subject
 
-In order to resolve subjects of type `Volunteer` based on the current logged in
+In order to resolve subjects of type `Customer` based on the current logged in
 frontend user the session service helper provides the following API:
 
 ```php
-$this->currentVolunteer = SubjectResolver::get()
-    ->forClassName(Volunteer::class)
+$currentCustomer = SubjectResolver::get()
+    ->forClassName(Customer::class)
     ->forPropertyName('user')
     ->resolve();
 ```
