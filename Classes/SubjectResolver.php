@@ -129,6 +129,8 @@ class SubjectResolver
     {
         $query = $this->getPersistenceManager()
             ->createQueryForType($this->className);
+        $query->getQuerySettings()
+            ->setRespectStoragePage(false);
         $query->matching(
             $query->equals($this->propertyName, $frontendUserId)
         );

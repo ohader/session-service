@@ -132,6 +132,8 @@ class SubjectCollection extends \ArrayObject implements \JsonSerializable
         $query = $this->getPersistenceManager()
             ->createQueryForType($className)
             ->setLimit(1);
+        $query->getQuerySettings()
+            ->setRespectStoragePage(false);
         $query->matching(
             $query->equals('uid', $uid)
         );
