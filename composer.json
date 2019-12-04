@@ -19,7 +19,9 @@
             "OliverHader\\SessionService\\Tests\\": "Tests"
         }
     },
-    "replace": {
-        "session_service": "self.version"
+    "extra": {
+        "typo3/cms": {
+            "extension-key": "session_service"
+        }
     }
 }
