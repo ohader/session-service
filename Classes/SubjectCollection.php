@@ -46,11 +46,15 @@ class SubjectCollection extends \ArrayObject implements \JsonSerializable
     public function jsonSerialize(): array
     {
         return array_map(
-            function (AbstractEntity $entity) {
-                $this->assertUid($entity->getUid());
+            function (AbstractEntity $item) {
+                try {
+                    $this->assertUid($item->getUid());
+                } catch (\LogicException $exception) {
+                    $this->autoCommit($item);
+                }
                 return [
-                    'class' => get_class($entity),
-                    'uid' => $entity->getUid(),
+                    'class' => get_class($item),
+                    'uid' => $item->getUid(),
                 ];
             },
             $this->getArrayCopy()
@@ -96,6 +100,14 @@ class SubjectCollection extends \ArrayObject implements \JsonSerializable
         $this->exchangeArray([]);
         $this->persist();
         return $this;
+    }
+
+    private function autoCommit(AbstractEntity $item)
+    {
+        $persistenceManager = clone $this->getPersistenceManager();
+        $persistenceManager->clearState();
+        $persistenceManager->add($item);
+        $persistenceManager->persistAll();
     }
 
     private function assertClassName(string $className)
